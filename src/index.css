@@ -11,13 +11,17 @@ html, body {
   min-height: 100vh !important;
 }
 
+svg {
+  display: inherit !important;
+}
+
 .container {
   @apply m-auto max-w-screen-xl p-4
 }
 
 .nav-bg-custom{
   background-color: #FCB040;
-  position: absolute;
+  position: fixed;
   height: 88px;
   z-index: 99;
 }
@@ -41,6 +45,22 @@ html, body {
   font-size: 40px;
   color: white;
   text-align: center;
+  font-family: 'Newsreader', serif;
+}
+
+.credential-header-alt{
+  font-size: 30px;
+  color: #989696 !important;
+  border-bottom-style: none !important;
+  font-family: 'Newsreader', serif;
+}
+
+.credential-header{
+  font-size: 30px;
+  color: black;
+  border-bottom-width: 0.2rem;
+  border-bottom-style: solid;
+  border-bottom-color: #ca8f36;
   font-family: 'Newsreader', serif;
 }
 
@@ -84,6 +104,84 @@ html, body {
   margin-top: auto !important;
 }
 
+.banner-button-color{
+  background-color: #426B1F !important;
+}
+
+.scribble-1-p{
+  top: 3rem;
+  left: 5rem;
+  width: 5rem;
+  height: 5rem;
+}
+
+.scribble-2-p{
+  top: 20rem;
+  left: 15rem;
+  width: 7rem;
+  height: 7rem;
+}
+
+.scribble-3-p{
+  /* top: 20rem; */
+  right: 0rem;
+  bottom: 0rem;
+  /* width: 7rem;
+  height: 7rem; */
+}
+
+.page-div{
+  background-color: #fff;
+  width: 35%;
+  /* height: 80%; */
+  z-index: 999;
+  border-radius: 1rem;
+  box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.2);
+}
+
+.social-handle-p{
+  width: 3rem;
+  height: 3rem;
+}
+
+.gradLine3{
+  width: 50%;
+  margin: 20px auto 0 auto;
+  display: block;
+  border: none;
+  height: 5px;
+  background: #0071B9;
+  background: linear-gradient(to right, white, #ca8f35, #000, #ca8f35, white);
+}
+
+.page-ht{
+  height: 100vh;
+  background-color: #ca8f35;
+}
+
+.spinner-position-alt{
+  margin: auto !important;
+}
+
+.spinner-position{
+  margin: 10rem auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.cart-payment-button{
+  height: 45px;
+  align-items: center;
+  box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.2);
+  display: flex;
+  padding: 16px 21px;
+  border-radius: 8px;
+  background-color: #fcb040;
+  overflow: hidden;
+}
+
 .banner-button {
   margin-top: 70px;
   width: 177px;
@@ -96,6 +194,10 @@ html, body {
   border-radius: 8px;
   background-color: #fcb040;
   overflow: hidden;
+}
+
+.red-label{
+  color: red;
 }
 
 .header-colored-text-alt{
@@ -471,8 +573,85 @@ hr.default-alt-2 {
   opacity: 1;
 }
 
+.cart-bag-position{
+  position: absolute;
+  right: 1rem;
+}
+
+.tooltip-position-alt{
+  width: auto;
+  background: #FCB040;
+  padding: 0.3rem;
+  position: absolute;
+  bottom: 2.5rem;
+  right: 0rem;
+}
+
+.tooltip-position{
+  width: 3.7rem;
+  background: #FCB040;
+  padding: 0.3rem;
+  position: absolute;
+  bottom: 1.2rem;
+  right: 0rem;
+}
+
+.user-icon{
+  color: white;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.tooltip-text{
+  font-size: 0.5rem;
+  font-weight: 500;
+  color: white;
+}
+
+.group:hover .invisible {
+  /* Show the tooltip */
+  visibility: visible;
+}
+
+/* For tooltip element */
+.invisible {
+  visibility: hidden;
+}
+
 .footer-color{
   background-color: #FCB040;
+}
+
+.credential-input-b{
+  border-radius: 10px;
+  height: 3rem;
+  color: black;
+  padding: 0px 1rem;
+  background: #ca8f363b;
+}
+
+.credential-button-text{
+  font-family: 'Newsreader', serif;
+  font-size: 1.3rem;
+  color: white
+}
+
+.social-text{
+  font-family: 'Newsreader', serif;
+  font-size: 1.3rem;
+  color: black
+}
+
+.credential-button{
+  background: black;
+  width: 100%;
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 0px 5px 5px 0px #858585;
+}
+
+.credential-input-b::placeholder{
+  color: rgb(99, 95, 95);
 }
 
 .foot-input-field{
@@ -509,11 +688,27 @@ hr.default-alt-2 {
   background: #FFF;
 }
 
+.a-z-alt:focus {
+  outline: none !important;
+}
+
+.a-z-alt:hover{
+  outline: none !important;
+}
+
 .a-z:focus{
   outline: none !important;
 }
 
 .a-z:hover{
+  outline: none !important;
+}
+
+.cart-b:focus{
+  outline: none !important;
+}
+
+.cart-b:hover{
   outline: none !important;
 }
 
@@ -573,6 +768,10 @@ hr.default-alt-2 {
   font-weight: 600;
 }
 
+.item-card-price-alt{
+  color: #426B1F !important;
+}
+
 .item-card-price{
   color: #FCB040;
   font-family: 'Inter', sans-serif;
@@ -583,6 +782,61 @@ hr.default-alt-2 {
 
 .item-card-description{
   color: #6D6D6D;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.cart-count{
+  position: absolute;
+  right: -0.5rem;
+  top: -0.5rem;
+  background: black;
+  border-radius: 50%;
+  width: 1rem;
+  height: 1rem;
+}
+
+.cart-count-text{
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 11px;
+}
+
+.cart-number{
+  color: #426B1F;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 300;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+.cart-card{
+  width: 51.3125rem;
+  height: 9.9375rem;
+  border-radius: 1.5rem;
+  border: 2px solid #E6E6E6;
+  background: rgba(250, 250, 245, 0.20);
+  backdrop-filter: blur(2px);
+}
+
+.summary-card{
+  width: 24.6875rem;
+  /* height: 19.875rem; */
+  border-radius: 1.5rem;
+  border: 2px solid #E6E6E6;
+  background: rgba(250, 250, 245, 0.20);
+  backdrop-filter: blur(2px);
+}
+
+.summary-card-sub{
+  color: #000;
   font-family: 'Inter', sans-serif;
   font-size: 1rem;
   font-style: normal;

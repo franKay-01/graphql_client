@@ -1,9 +1,11 @@
-import { Disclosure } from '@headlessui/react'
-import { MenuIcon, XIcon } from '@heroicons/react/outline'
+import React, { useContext, Fragment } from 'react';
+import { Disclosure, Popover, Transition  } from '@headlessui/react'
+import { MenuIcon, XIcon, ChevronDownIcon } from '@heroicons/react/outline'
 import Logo from '../assets/logo.png'
 import {Link, NavLink} from 'react-router-dom'
 import SearchImg from '../assets/search.png'
 import ShopImg from '../assets/shop_logo.png'
+import { CartContext } from '../context/cartContext'
 
 const navigation = [
   { name: 'HOME', href: '/pension', current: false },
@@ -14,11 +16,9 @@ const navigation = [
   { name: 'WHOLESALE', href: '/calculator', current: false },
 ]
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
-
 export default function Navbar() {
+  const { cart } = useContext(CartContext);
+
   return (
     <Disclosure as="nav" className="nav-bg-custom mobile-nav box-shad w-full left-0 top-0 nav-index">
       {({ open }) => (
@@ -56,12 +56,80 @@ export default function Navbar() {
               <div className="hidden lg:block lg:w-auto mr-4">
                 <a href='/get-started' className="brown-button button-margin-left">
                   <img src={SearchImg}/>
+                  
+                </a>
+              </div>
+              <div className="hidden lg:block lg:w-auto mr-4">
+                <a href='/cart' className="brown-button button-margin-left relative">
+                  <img src={ShopImg}/>
+                  {cart.length > 0 ? <div className='cart-count'><p className='cart-count-text'>{cart.length}</p></div> : null}
                 </a>
               </div>
               <div className="hidden lg:block lg:w-auto">
-                <a href='/get-started' className="brown-button button-margin-left">
-                  <img src={ShopImg}/>
-                </a>
+                <div>
+                  <Popover className="relative">
+                    {({ open }) => (
+                      <>
+                        <Popover.Button
+                          className={`
+                            ${open ? '' : 'text-opacity-90'}
+                            group a-z-alt`}
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 user-icon">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                          </svg>
+                        </Popover.Button>
+                        <Transition
+                          as={Fragment}
+                          enter="transition ease-out duration-200"
+                          enterFrom="opacity-0 translate-y-1"
+                          enterTo="opacity-100 translate-y-0"
+                          leave="transition ease-in duration-150"
+                          leaveFrom="opacity-100 translate-y-0"
+                          leaveTo="opacity-0 translate-y-1"
+                        >
+                          <Popover.Panel className="absolute left-1/2 z-10 mt-3 w-screen max-w-sm -translate-x-1/2 transform px-4 sm:px-0">
+                            <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                              <div className="relative grid gap-8 bg-white p-7 lg:grid-cols-2">
+                                <a
+                                  key={'item.name'}
+                                  href={'item.href'}
+                                  className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
+                                >
+                                  <div className="ml-4">
+                                    <p className="text-sm font-medium text-gray-900">
+                                      Test
+                                    </p>
+                                    <p className="text-sm text-gray-500">
+                                      item.description
+                                    </p>
+                                  </div>
+                                </a>
+                              </div>
+                              <div className="bg-gray-50 p-4">
+                                <a
+                                  href="##"
+                                  className="flow-root rounded-md px-2 py-2 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
+                                >
+                                  <span className="flex items-center">
+                                    <span className="text-sm font-medium text-gray-900">
+                                      Documentation
+                                    </span>
+                                  </span>
+                                  <span className="block text-sm text-gray-500">
+                                    Start integrating products and tools
+                                  </span>
+                                </a>
+                              </div>
+                            </div>
+                          </Popover.Panel>
+                        </Transition>
+                      </>
+                    )}
+                  </Popover>
+                </div>
+ 
+                
               </div>
             </div>
           </div>
