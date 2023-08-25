@@ -35,6 +35,17 @@ export default function Users(){
     }
   }
 
+  const loginUser = async () => {
+
+    if (passcode === "" || username === ""){
+      ShowToast('error', "Please fill all required fields")
+      return
+    }
+
+    setIsLoading(true)
+    // const { response_code, msg } = await signUp(params);
+
+  }
   const submitUserDetails = async () => {
     let {resp_code, resp_desc} = checkCredentials()
     if (!resp_code){
@@ -55,7 +66,7 @@ export default function Users(){
     const { response_code, msg } = await signUp(params);
     if (response_code === 200){
       ShowToast("success", "Sign Up was successful")
-      
+
       setUsername('')
       setFirstName('')
       setLastName('')

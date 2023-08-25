@@ -15,7 +15,7 @@ export default function Footer() {
               <h1 className='footer-button-text'>SUBSCRIBE</h1>
             </button>
           </div>
-          <div className="flex flex-row space-x-5 text-sm dark:text-gray-400">
+          <div className="grid grid-cols-3 gap-4 text-center lg:flex lg:flex-row md:flex md:flex-row lg:space-x-5 md:space-x-5 text-sm dark:text-gray-400">
             <a rel="noopener noreferrer" className='nav-text nav-text-alt' href="#">HOME</a>
             <a rel="noopener noreferrer" className='nav-text nav-text-alt' href="#">GALLERY</a>
             <a rel="noopener noreferrer" className='nav-text nav-text-alt' href="#">SHOP</a>

@@ -7,6 +7,9 @@ import RightArrow from "../assets/right.png";
 import FacebookLogo from '../assets/facebook_alt.png'
 import InstagramLogo from '../assets/instagram_alt.png'
 import YoutubeLogo from '../assets/youtube_alt.png'
+import $ from 'jquery'; 
+import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
+import 'pure-react-carousel/dist/react-carousel.es.css';
 
 import DoubleItemList from "../components/doubleGridList";
 import SlideOne from "../assets/slide_1.png"
@@ -15,6 +18,7 @@ import { useEffect } from "react";
 import Footer from "../components/footer";
 
 export default function Home(){
+
   const items = [{'name':'Item 1', 'image': SlideOne}, {'name':'Item 1', 'image': SlideOne},
   {'name':'Item 1', 'image': SlideOne},{'name':'Item 1', 'image': SlideOne},{'name':'Item 1', 'image': SlideOne},
   {'name':'Item 1', 'image': SlideOne},{'name':'Item 1', 'image': SlideOne},{'name':'Item 1', 'image': SlideOne}];
@@ -30,8 +34,8 @@ export default function Home(){
             <h1 className="banner-button-text">Read more about us</h1>
           </div>
         </div>
-        <div className="flex flex-col main-container mt-24">
-          <h1 className="header-colored-text">Best quality right from the heart<br></br>of Africa</h1>
+        <div className="flex flex-col main-container mt-12 lg:mt-24 md:mt-24">
+          <h1 className="header-colored-text">Best quality right from the heart of Africa</h1>
           <h1 className="essence-text mt-12 mb-12">Taste the very Essence of Africa</h1>
 
           <div className="container variety-bg flex flex-col">
@@ -41,7 +45,7 @@ export default function Home(){
             </div>
           </div>
 
-          <div className="container grid grid-cols-1 md:flex md:flex-row space-x-9">
+          <div className="container grid grid-cols-1 md:flex md:flex-row space-x-0 lg:space-x-9 md:space-x-5">
             <div className="main-container flex flex-col">
               <img className="mt-12" src={QuoteImg}/>
               <h1 className="quote-text">
@@ -74,8 +78,25 @@ export default function Home(){
           <div className="container">
             <hr className="default"/>
           </div>
-       
-          <div class="max-w-screen-2xl mx-auto mt-12 px-4 relative bg-white">
+          <div className="flex flex-col space-y-4 p-4 justify-center items-center lg:hidden md:hidden ">
+            <div className="grid grid-cols-1">
+              <img class="object-cover image-width h-full" src='https://images.unsplash.com/photo-1666147775717-65fa1fe0c47b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NjY2NDMxNzc&ixlib=rb-4.0.3&q=80&w=400' alt=''/>
+              <p className="gallery-text gallery-text-auto"><b>Central California</b> — The person who grew these was located in Central California and, er, hopefully very well-compensated.</p>
+            </div>
+            <div>
+              <img class="object-cover image-width h-full" src='https://images.unsplash.com/photo-1665561741359-7af2d2fdc395?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NjY2NDMxNzc&ixlib=rb-4.0.3&q=80&w=400' alt=''/>
+              <p className="gallery-text gallery-text-auto"><b>Central California</b> — The person who grew these was located in Central California and, er, hopefully very well-compensated.</p>
+            </div>
+            <div className="grid grid-cols-1">
+              <img class="object-cover image-width h-full" src='https://images.unsplash.com/photo-1666147775717-65fa1fe0c47b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NjY2NDMxNzc&ixlib=rb-4.0.3&q=80&w=400' alt=''/>
+              <p className="gallery-text gallery-text-auto"><b>Central California</b> — The person who grew these was located in Central California and, er, hopefully very well-compensated.</p>
+            </div>
+            <div>
+              <img class="object-cover image-width h-full" src='https://images.unsplash.com/photo-1665561741359-7af2d2fdc395?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NjY2NDMxNzc&ixlib=rb-4.0.3&q=80&w=400' alt=''/>
+              <p className="gallery-text gallery-text-auto"><b>Central California</b> — The person who grew these was located in Central California and, er, hopefully very well-compensated.</p>
+            </div>
+          </div>
+          <div class="hidden lg:block md:block max-w-screen-2xl mx-auto mt-12 px-4 relative bg-white">
             <div class="flex flex-col md:flex-row gap-2 scrollable-div scroll-pt-20	">
               <div class="flex flex-1 flex-col item">
                 <div class="flex flex-1 flex-col">
@@ -162,9 +183,16 @@ export default function Home(){
           </div>
           <div className="container">
             <div class="flex justify-center">
-              <h1 className="header-colored-text header-colored-text-alt">Recipe of the Day</h1>
+              <h1 className="header-colored-text header-colored-text-alt-1">Recipe of the Day</h1>
             </div>
-            <div class="grid grid-flow-col gap-4">
+            <div className="flex flex-col lg:hidden md:hidden">
+              <div className="custom-width">
+                <h1 className="header-colored-text">Banana Fruitcake</h1>
+                <h1 className="recipe-sub-text">Taste the very Essence of Africa</h1>
+                <hr className="default hr-margin"/>
+              </div>
+            </div>
+            <div class="hidden lg:grid md:grid grid-flow-col gap-4">
               <div class="row-start-2 row-span-2">
                 <div className="custom-width">
                   <h1 className="header-colored-text header-colored-text-alt">Banana Fruitcake</h1>
@@ -173,7 +201,7 @@ export default function Home(){
                 </div>
               </div>
              
-              <div class="row-start-1 row-end-4 relative">
+              <div class="hidden lg:block md:block row-start-1 row-end-4 relative">
                 <div className="carrot-image">
                   <img className="carrot-image-alt" src={CarrotImg}/>
                 </div>
@@ -181,7 +209,7 @@ export default function Home(){
             </div>
           </div>
           <div className="container">
-            <div className="grid grid-cols-3">
+            <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-3">
               <div>
                 <img class="image-width-alt" src='https://images.unsplash.com/photo-1666147775717-65fa1fe0c47b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NjY2NDMxNzc&ixlib=rb-4.0.3&q=80&w=400' alt=''/>
               </div>

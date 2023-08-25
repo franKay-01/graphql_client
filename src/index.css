@@ -220,6 +220,7 @@ svg {
 }
 
 .header-colored-text{
+  width: 30rem;
   font-size: 48px;
   font-weight: 800;
   text-align: center;
@@ -245,6 +246,7 @@ svg {
 .essence-text{
   font-size: 28px;
   font-weight: 200;
+  text-align: center;
   font-family: 'Inter', sans-serif;
 }
 
@@ -306,6 +308,7 @@ svg {
 }
 
 .recipe-p{
+  margin-top: 1rem;
   font-size: 21px;
   font-weight: 200;
   color: #6D6D6D;
@@ -350,6 +353,7 @@ hr.default-alt-2 {
 .image-width-alt{
   width: 20rem;
   height: 40rem;
+  border-radius: 1rem;
 }
 
 .image-width{
@@ -841,4 +845,93 @@ hr.default-alt-2 {
   font-size: 1rem;
   font-style: normal;
   font-weight: 400;
+}
+
+@media screen and (max-width: 768px) {
+  .variety-text{
+    font-size: 4rem;
+  }
+
+  .header-colored-text-alt-1{
+    font-size: 3rem !important;
+  }
+
+  .recipe-sub-text{
+    text-align: center;
+  }
+
+  .header-colored-text{
+    font-size: 2rem;
+    width: auto;
+  }
+
+  .gallery-text{
+    width: auto;
+  }
+
+  .image-width-alt{
+    width: auto;
+  }
+
+  .variety-text-alt{
+    font-size: 3.5rem;
+  }
+}
+
+@media screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+
+}
+
+.custom-slider{
+  width: 90%;
+  margin: auto;
+}
+.custom-box{
+  width: 200px;
+  height: 100px;
+  text-align:center;
+  box-shadow: 2px 2px 3px gray;
+  margin: 15px;
+  font-size: 5em;
+  padding: 50px;
+}
+.slick-prev, .slick-next{
+  position: absolute;
+  line-height: 0;
+  top: 50%;
+  width: 30px;
+  height: 30px;
+  display: block;
+  padding: 0;
+  -webkit-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+  cursor: pointer;
+  color: transparent;
+  border: none;
+  outline: none;
+  border-radius: 50px;
+  background: #043e46;
+}
+.slick-slider{
+  user-select: none;
+}
+.slick-next{
+  right: -30px;
+}
+.slick-prev{
+  left: -30px;
+}
+.slick-next:before{
+  content: '\003e';
+  font-size: 1.2em;
+  font-weight: 1000;
+  padding-left: 12px;
+  color: white;
+}
+.slick-prev:before{
+  content: '\003c';
+  font-size: 1.2em;
+  font-weight: 1000;
+  padding-left: 9px;
+  color: white;
 }

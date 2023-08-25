@@ -64,7 +64,7 @@ export default function Shop(){
           {allProducts.map((item, index) => {
             return <div className="item-card flex flex-row relative">
               <div className="item-card-top">
-                {item.img_url === null ? 
+                {item.img_url === "" ? 
                   <img className="item-card-img" src={ShopImg}/>
                   :
                   <img className="item-card-img" src={item.img_url}/>
