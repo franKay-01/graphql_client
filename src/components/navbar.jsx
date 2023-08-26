@@ -128,8 +128,6 @@ export default function Navbar() {
                     )}
                   </Popover>
                 </div>
- 
-                
               </div>
             </div>
           </div>
@@ -139,7 +137,7 @@ export default function Navbar() {
               <Disclosure.Button className="inline-flex place-x mt-8 link-button-position items-center justify-right p-2 rounded-md text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                   <span className="sr-only">Open main menu</span>
                   {open ? (
-                    <XIcon className="block h-12 w-12 text-white" aria-hidden="true" />
+                    <XIcon className="block h-12 w-12 text-white mobile-nav-b" aria-hidden="true" />
                   ) : (
                     <img className='w-10' src={MenuIcon}/>
                   )}
