@@ -52,8 +52,8 @@ export default function Cart(){
         <div className="container main-container">
           <hr className="default-alt-2"></hr>
         </div>
-        <div className="container grid grid-cols-3">
-          <div className="col-span-2 space-y-4">
+        <div className="container grid grid-cols-1 lg:grid-cols-3 md:grid-cols-3">
+          <div className="mt-8 lg:mt-0 md:mt-0 lg:col-span-2 md:col-span-2 order-2 lg:order-1 md:order-2 space-y-4">
             {cart.length > 0 ? 
               cart.map((cart_item)=>{
                 return <div className="cart-card flex flex-row space-x-12 p-4">
@@ -93,7 +93,7 @@ export default function Cart(){
               </div>
             }
           </div>
-          <div className="summary-card p-4 flex flex-col space-y-4">
+          <div className="order-1 lg:order-2 md:order-2 summary-card p-4 flex flex-col space-y-4">
             <h1 className="item-card-label">Order Summary</h1>
             <div className="flex justify-between">
               <h1 className="summary-card-sub">Subtotal</h1>

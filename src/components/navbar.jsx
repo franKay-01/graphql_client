@@ -8,12 +8,12 @@ import ShopImg from '../assets/shop_logo.png'
 import { CartContext } from '../context/cartContext'
 
 const navigation = [
-  { name: 'HOME', href: '/pension', current: false },
-  { name: 'GALLERY', href: '/provident', current: false },
-  { name: 'SHOP', href: '/occupational', current: false },
-  { name: 'ABOUT US', href: '/about', current: false },
-  { name: 'CONTACT US', href: '/faqs', current: false },
-  { name: 'WHOLESALE', href: '/calculator', current: false },
+  { name: 'HOME', href: '/', current: false },
+  { name: 'GALLERY', href: '/gallery', current: false },
+  { name: 'SHOP', href: '/shop', current: false },
+  { name: 'ABOUT US', href: '/', current: false },
+  { name: 'CONTACT US', href: '/', current: false },
+  { name: 'WHOLESALE', href: '/shop', current: false },
 ]
 
 export default function Navbar() {

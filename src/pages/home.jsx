@@ -35,7 +35,7 @@ export default function Home(){
           </div>
         </div>
         <div className="flex flex-col main-container mt-12 lg:mt-24 md:mt-24">
-          <h1 className="header-colored-text">Best quality right from the heart of Africa</h1>
+          <h1 className="header-colored-text width-30">Best quality right from the heart of Africa</h1>
           <h1 className="essence-text mt-12 mb-12">Taste the very Essence of Africa</h1>
 
           <div className="container variety-bg flex flex-col">

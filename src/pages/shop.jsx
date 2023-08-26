@@ -35,8 +35,8 @@ export default function Shop(){
     <div className="min-h-screen relative">
       <Navbar/>
       <main className="main-home-content">
-        <div className="grid grid-cols-3">
-          <h1 className="col-span-2 header-colored-text header-colored-text-alt-2 mt-12">Products</h1>
+        <div className="grid grid-cols-2 lg:grid-cols-3 md:grid-cols-3">
+          <h1 className="lg:col-span-2 md:col-span-2 header-colored-text header-colored-text-alt-2 mt-12">Products</h1>
           <div className="flex flex-row a-z-position">
             <Popover className="relative px-3 rounded-md font-normal text-lg text-default-blue learn-display focus:outline-none">
               <Popover.Button className="a-z">

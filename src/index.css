@@ -219,8 +219,11 @@ svg {
   margin: -5rem 5rem;
 }
 
-.header-colored-text{
+.width-30{
   width: 30rem;
+}
+
+.header-colored-text{
   font-size: 48px;
   font-weight: 800;
   text-align: center;
@@ -872,6 +875,20 @@ hr.default-alt-2 {
 }
 
 @media screen and (max-width: 768px) {
+  .header-colored-text-alt-2{
+    margin-left: 2rem;
+  }
+
+  .summary-card{
+    width: auto;
+  }
+
+  .a-z{
+    width: 6rem;
+    height: 3rem;
+    padding: initial;  
+  }
+
   .variety-text{
     font-size: 4rem;
   }
