@@ -8,6 +8,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import { ShowToast } from '../components/showToast';
 import useFunctions from '../utils/functions';
+import { useNavigate } from "react-router-dom"
 
 export default function Users(){
   const [loginSelect, setLoginSelect] = useState(true)
@@ -21,7 +22,9 @@ export default function Users(){
   const [confirmPasscode, setConfirmPasscode] = useState('')
   const [username, setUsername] = useState('')
 
-  const { signUp } = useFunctions();
+  const { signUp, signUserIn } = useFunctions();
+
+  const router = useNavigate()
 
   const changeUserChoice = (choice) => {
     setCountry(choice)
@@ -43,8 +46,14 @@ export default function Users(){
     }
 
     setIsLoading(true)
-    // const { response_code, msg } = await signUp(params);
-
+    const { response_code, msg } = await signUserIn(params);
+    if (response_code === 200){
+      setIsLoading(false)
+      router('/')
+    }else{
+      ShowToast("error", msg)
+      setIsLoading(false)
+    }
   }
   const submitUserDetails = async () => {
     let {resp_code, resp_desc} = checkCredentials()
@@ -100,8 +109,8 @@ export default function Users(){
             loginSelect ?
             <>
               <div className='flex flex-col space-y-4'>
-                <input className='credential-input-b focus:outline-none' placeholder='Email Address' type="text"/>
-                <input className='credential-input-b focus:outline-none' placeholder='Passcode' type="password"/>
+                <input className='credential-input-b focus:outline-none' onChange={(e) => setUsername(e.target.value)} placeholder='Username' type="text"/>
+                <input className='credential-input-b focus:outline-none' onChange={(e) => setPasscode(e.target.value)} placeholder='Passcode' type="password"/>
               </div>
               <div>
                 {isLoading ? 
@@ -111,7 +120,7 @@ export default function Users(){
                     </span>
                   </button>
                   :
-                  <button className='credential-button' onClick={() => submitUserDetails()}>
+                  <button className='credential-button' onClick={() => loginUser()}>
                     <h1 className='credential-button-text'>Sign In</h1>
                   </button>
                 }

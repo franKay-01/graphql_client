@@ -1,7 +1,6 @@
 import { useState } from 'react';
 export default function Success(){
   const [successful, setSuccessful] = useState(false)
-  
 
   // useEffect(() => {
   //   const { pathname, search, hash } = location;
