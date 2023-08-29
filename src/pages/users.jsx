@@ -45,6 +45,8 @@ export default function Users(){
       return
     }
 
+    const params = {"password": passcode, "username": username}
+
     setIsLoading(true)
     const { response_code, msg } = await signUserIn(params);
     if (response_code === 200){
