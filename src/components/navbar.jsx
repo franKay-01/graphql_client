@@ -6,6 +6,8 @@ import {Link, NavLink} from 'react-router-dom'
 import SearchImg from '../assets/search.png'
 import ShopImg from '../assets/shop_logo.png'
 import { CartContext } from '../context/cartContext'
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 const navigation = [
   { name: 'HOME', href: '/', current: false },
@@ -18,7 +20,14 @@ const navigation = [
 
 export default function Navbar() {
   const { cart } = useContext(CartContext);
+  const [siginedIn, setSignedIn] = useState(false)
 
+  useEffect(()=>{
+    const token = localStorage.getItem('ttk')
+    if (token) {
+      setSignedIn(true)
+    }
+  }, [])
   return (
     <Disclosure as="nav" className="nav-bg-custom mobile-nav box-shad w-full left-0 top-0 nav-index">
       {({ open }) => (
@@ -88,39 +97,55 @@ export default function Navbar() {
                           leaveFrom="opacity-100 translate-y-0"
                           leaveTo="opacity-0 translate-y-1"
                         >
-                          <Popover.Panel className="absolute left-1/2 z-10 mt-3 w-screen max-w-sm -translate-x-1/2 transform px-4 sm:px-0">
+                          <Popover.Panel className="absolute left-abs z-10 mt-3 w-screen max-w-sm -translate-x-1/2 transform px-4 sm:px-0">
                             <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                              <div className="relative grid gap-8 bg-white p-7 lg:grid-cols-2">
-                                <a
-                                  key={'item.name'}
-                                  href={'item.href'}
-                                  className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
-                                >
-                                  <div className="ml-4">
-                                    <p className="text-sm font-medium text-gray-900">
-                                      Test
-                                    </p>
-                                    <p className="text-sm text-gray-500">
-                                      item.description
-                                    </p>
+                              
+                              {siginedIn ?
+                                <>
+                                  <div className="relative grid gap-8 bg-white p-7 lg:grid-cols-2">
+                                    <a
+                                      key={'item.name'}
+                                      href={'item.href'}
+                                      className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
+                                    >
+                                      <div className="ml-4">
+                                        <p className="text-sm font-medium text-gray-900">
+                                          {siginedIn ? localStorage.getItem('username') : '---'}
+                                        </p>
+                                      </div>
+                                    </a>
                                   </div>
-                                </a>
-                              </div>
-                              <div className="bg-gray-50 p-4">
-                                <a
-                                  href="##"
-                                  className="flow-root rounded-md px-2 py-2 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
-                                >
-                                  <span className="flex items-center">
-                                    <span className="text-sm font-medium text-gray-900">
-                                      Documentation
+                                  <div className="bg-gray-50 p-4">
+                                    <a
+                                      href="##"
+                                      className="flow-root rounded-md px-2 py-2 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
+                                    >
+                                      <span className="flex items-center">
+                                        <span className="text-sm font-medium text-gray-900">
+                                          Documentation
+                                        </span>
+                                      </span>
+                                      <span className="block text-sm text-gray-500">
+                                        Start integrating products and tools
+                                      </span>
+                                    </a>
+                                  </div>
+                                </>
+                                :
+                                <div className="bg-gray-50 p-4">
+                                  <a
+                                    href="/credentials"
+                                    className="flow-root rounded-md px-2 py-2 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
+                                  >
+                                    <span className="flex items-center">
+                                      <span className="text-lg font-medium text-gray-900">
+                                        Sign In
+                                      </span>
                                     </span>
-                                  </span>
-                                  <span className="block text-sm text-gray-500">
-                                    Start integrating products and tools
-                                  </span>
-                                </a>
-                              </div>
+                                  </a>
+                                </div>
+                              }
+                              
                             </div>
                           </Popover.Panel>
                         </Transition>

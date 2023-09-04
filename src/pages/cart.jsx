@@ -7,9 +7,11 @@ import { useState } from "react";
 import { CartContext } from "../context/cartContext";
 import useFunctions from "../utils/functions";
 import { ShowToast } from "../components/showToast";
+import { useEffect } from "react";
 
 export default function Cart(){
   const [isLoading, setIsLoading] = useState(false)
+  const [isSignedIn, setIsSignedIn] = useState(false)
   const [selectedOption, setSelectedOption] = useState('');
   
   const { removeFromCart } = useContext(CartContext);
@@ -38,6 +40,12 @@ export default function Cart(){
     window.location.href = checkout_url
   }
 
+  useEffect(()=>{
+    const token = localStorage.getItem('ttk')
+    if (token){
+      setIsSignedIn(true)
+    }
+  }, [])
   return (
     
     <div className="min-h-screen relative">
@@ -112,12 +120,20 @@ export default function Cart(){
                   </span>
               </div>
               :
-              <div className="cart-payment-button flex flex-row justify-between cursor-pointer" onClick={() => checkout()}>
-                <h1 className="banner-button-text">Continue to payment</h1>
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
-                  <path d="M8 16H24M24 16L18 10M24 16L18 22" stroke="white"/>
-                </svg>
-              </div>
+              isSignedIn ? 
+                <div className="cart-payment-button flex flex-row justify-between cursor-pointer" onClick={() => checkout()}>
+                  <h1 className="banner-button-text">Continue to payment</h1>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <path d="M8 16H24M24 16L18 10M24 16L18 22" stroke="white"/>
+                  </svg>
+                </div>
+              : 
+                <a href="/credentials" className="cart-payment-button flex flex-row justify-between cursor-pointer">
+                  <h1 className="banner-button-text">Sign In to continue</h1>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <path d="M8 16H24M24 16L18 10M24 16L18 22" stroke="white"/>
+                  </svg>
+                </a>
             }
           </div>
         </div>

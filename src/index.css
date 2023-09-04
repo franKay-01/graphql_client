@@ -223,6 +223,10 @@ svg {
   width: 30rem;
 }
 
+.left-abs{
+  left: -7.7rem;
+}
+
 .header-colored-text{
   font-size: 48px;
   font-weight: 800;

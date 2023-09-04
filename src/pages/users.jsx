@@ -48,10 +48,13 @@ export default function Users(){
     const params = {"password": passcode, "username": username}
 
     setIsLoading(true)
-    const { response_code, msg } = await signUserIn(params);
+    const { response_code, token, client_username, msg } = await signUserIn(params);
     if (response_code === 200){
       setIsLoading(false)
-      router('/')
+      localStorage.setItem('username', client_username)
+      localStorage.setItem('ttk', token);
+
+      router(-1)
     }else{
       ShowToast("error", msg)
       setIsLoading(false)

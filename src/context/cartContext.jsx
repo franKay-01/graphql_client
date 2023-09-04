@@ -37,7 +37,6 @@ export const CartProvider = ({ children }) => {
     cart.forEach((item) => {
       total += item.price * item.quantity;
     });
-    console.log("TOTAL " + total)
     return total;
   };
 

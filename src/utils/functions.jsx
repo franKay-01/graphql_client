@@ -41,7 +41,20 @@ const useFunctions = () => {
     try {
       const {data} = await executeReq('users/signin', params)
       if (data.response_code === 200){
-        return {response_code: 200}
+        return {response_code: 200, token: data.token, client_username: data.username ,msg: null}
+      }else{
+        return {response_code: 201, token: null, client_username: null ,msg: data.error.message}
+      }
+    }catch{
+      return {response_code: 201,  token: null, client_username: null, msg: "Sign In process failed. Please try again in a few minutes"}
+    }
+  }
+
+  const getOrders = async () => {
+    try {
+      const {data} = await executeGet('order/customer')
+      if (data.response_code === 200){
+        return {response_code: 200, orders: data.orders}
       }else{
         return {response_code: 201, msg: data.error.message}
       }
@@ -50,7 +63,7 @@ const useFunctions = () => {
     }
   }
 
-  return { submitCheckOut, getProducts, signUp, signUserIn }
+  return { submitCheckOut, getProducts, signUp, signUserIn, getOrders }
 }
 
 export default useFunctions
