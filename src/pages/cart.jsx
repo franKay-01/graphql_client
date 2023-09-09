@@ -1,9 +1,10 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import Navbar from "../components/navbar";
 import ShopImg from "../assets/shop_item.png"
 import Footer from "../components/footer";
+import { useNavigate } from "react-router-dom"
+
 import { Popover } from '@headlessui/react'
-import { useState } from "react";
 import { CartContext } from "../context/cartContext";
 import useFunctions from "../utils/functions";
 import { ShowToast } from "../components/showToast";
@@ -15,6 +16,8 @@ export default function Cart(){
   const [selectedOption, setSelectedOption] = useState('');
   
   const { removeFromCart } = useContext(CartContext);
+
+  const router = useNavigate()
 
   const { submitCheckOut } = useFunctions();
   const { cart, calculateTotal, increaseQuantity, changePrice} = useContext(CartContext);
@@ -28,9 +31,16 @@ export default function Cart(){
 
   const checkout = async () => {
     setIsLoading(true)
-    const { checkout_url, error } = await submitCheckOut(cart);
+    const { response_code, checkout_url, error, msg } = await submitCheckOut(cart);
 
     if (error){
+      if (response_code === 300){
+        setIsLoading(false)
+        ShowToast('error', msg)
+        localStorage.removeItem('ttk');
+        router('/credentials')
+        return
+      }
       setIsLoading(false)
       ShowToast('error', 'Checkout process failed. Please try again in a few minutes')
       return
@@ -121,12 +131,20 @@ export default function Cart(){
               </div>
               :
               isSignedIn ? 
-                <div className="cart-payment-button flex flex-row justify-between cursor-pointer" onClick={() => checkout()}>
-                  <h1 className="banner-button-text">Continue to payment</h1>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
-                    <path d="M8 16H24M24 16L18 10M24 16L18 22" stroke="white"/>
-                  </svg>
-                </div>
+                cart.length > 0 ?
+                  <div className="cart-payment-button flex flex-row justify-between cursor-pointer" onClick={() => checkout()}>
+                    <h1 className="banner-button-text">Continue to payment</h1>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+                      <path d="M8 16H24M24 16L18 10M24 16L18 22" stroke="white"/>
+                    </svg>
+                  </div>
+                  :
+                  <a href="/shop" className="cart-payment-button flex flex-row justify-between cursor-pointer">
+                    <h1 className="banner-button-text">Add Items to Cart</h1>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+                      <path d="M8 16H24M24 16L18 10M24 16L18 22" stroke="white"/>
+                    </svg>
+                  </a>
               : 
                 <a href="/credentials" className="cart-payment-button flex flex-row justify-between cursor-pointer">
                   <h1 className="banner-button-text">Sign In to continue</h1>

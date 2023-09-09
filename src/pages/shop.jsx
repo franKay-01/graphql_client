@@ -19,7 +19,7 @@ export default function Shop(){
 
   const getShopProducts = async () => {
     const { response_code, products } = await getProducts();
-    if (response_code === "000"){
+    if (response_code === 200){
       setAllProducts(products)
     }else{
       ShowToast("error", "Products could not be loaded. Please try again in a few minutes")

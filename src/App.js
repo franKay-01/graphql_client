@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import {Route, Routes} from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 
 const HomePage = React.lazy(()=> import('./pages/home'));
 const GalleryPage = React.lazy(()=> import('./pages/gallery'));
@@ -9,6 +9,26 @@ const SuccessPage = React.lazy(()=> import('./pages/success'));
 const UsersPage = React.lazy(()=> import('./pages/users'));
 
 const App = () => {
+  const router = useNavigate()
+
+  useEffect(() => {
+    const handleStorageChange = (e) => {
+      if (e.key === 'cart' || e.key === 'ttk') {
+        localStorage.removeItem('ttk');
+        localStorage.removeItem('cart');
+        router('/credentials')
+        return
+      }
+    };
+
+    // Add the event listener for 'storage' events
+    window.addEventListener('storage', handleStorageChange);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  },[])
   return (
     <React.Suspense fallback={"..... loading"}>
       <Routes>
