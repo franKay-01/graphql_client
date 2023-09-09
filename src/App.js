@@ -7,6 +7,7 @@ const ShopPage = React.lazy(()=> import('./pages/shop'));
 const CartPage = React.lazy(()=> import('./pages/cart'));
 const SuccessPage = React.lazy(()=> import('./pages/success'));
 const UsersPage = React.lazy(()=> import('./pages/users'));
+const OrderPage = React.lazy(()=> import('./pages/orders'));
 
 const App = () => {
   const router = useNavigate()
@@ -37,6 +38,7 @@ const App = () => {
         <Route path='/shop' element={<ShopPage/>}></Route>
         <Route path='/cart' element={<CartPage/>}></Route>
         <Route path='/success' element={<SuccessPage/>}></Route>
+        <Route path='/orders' element={<OrderPage/>}></Route>
         <Route path='/credentials' element={<UsersPage/>}></Route>
       </Routes>
     </React.Suspense>
