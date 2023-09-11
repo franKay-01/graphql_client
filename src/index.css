@@ -223,6 +223,10 @@ svg {
   width: 30rem;
 }
 
+.red-label{
+  color: red;
+}
+
 .left-abs{
   left: -7.7rem;
 }
