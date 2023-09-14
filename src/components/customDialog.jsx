@@ -9,7 +9,7 @@ const CustomDialog = ({ isOpen, onClose, title, content }) => {
           <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
 
           {/* This is the dialog itself */}
-          <div className="inline-block mt-44 align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+          <div className="inline-block mt-44 align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:align-middle sm:max-w-lg sm:w-full">
             <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
               <div className="sm:flex sm:items-start">
                 <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">

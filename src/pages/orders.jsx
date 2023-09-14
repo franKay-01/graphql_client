@@ -41,6 +41,7 @@ export default function Gallery(){
   const getCustomerOrders = async () => {
     const { response_code, orders } = await getOrders();
     if (response_code === 200){
+      console.log(JSON.stringify(orders))
       setAllOrders(orders)
     }else if (response_code === 300){
       setIsLoading(false)
@@ -63,7 +64,9 @@ export default function Gallery(){
 
   const ordersPageData = !!allOrders && allOrders.slice(offset, offset + PER_PAGE).map((data, index) => {
     const orderTitle = `Order ID: ${data.reference_no}`;
-    const orderDetails = `Products: \n # ${data.orderItems[0].products.name} x${data.orderItems[0].quantity}`;
+    // const orderDetails = `Products: \n # ${data.orderItems[0].products.name} x${data.orderItems[0].quantity}`;
+    const orderDetails = `Products: \n${data.orderItems.map(item => `# ${item.products.name} x${item.products.quantity}`).join('\n')}`;
+
     return (
       <tr className="border-b dark:border-neutral-500">
         <td className="whitespace-nowrap px-6 py-4 font-medium">{index + 1}</td>
@@ -110,34 +113,30 @@ export default function Gallery(){
         </div>
       </div>
       {allOrders.length > 0 ? 
-        allOrders.map((order_item)=>{
-          return (
-            <div className="flex flex-col">
-              <div className="overflow-x-auto">
-                <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-                  <div className="overflow-hidden">
-                    <table className="min-w-full text-left text-sm font-light">
-                      <thead className="border-b font-medium dark:border-neutral-500">
-                        <tr>
-                          <th scope="col" className="px-6 py-4">#</th>
-                          <th scope="col" className="px-6 py-4">Date</th>
-                          <th scope="col" className="px-6 py-4">Order ID</th>
-                          <th scope="col" className="px-6 py-4">Amount</th>
-                          <th scope="col" className="px-6 py-4">No. of Items</th>
-                          <th scope="col" className="px-6 py-4">Status</th>
-                          <th scope="col" className="px-6 py-4">Other</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {!!allOrders && ordersPageData}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
+        <div className="flex flex-col">
+          <div className="overflow-x-auto">
+            <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+              <div className="overflow-hidden">
+                <table className="min-w-full text-left text-sm font-light">
+                  <thead className="border-b font-medium dark:border-neutral-500">
+                    <tr>
+                      <th scope="col" className="px-6 py-4">#</th>
+                      <th scope="col" className="px-6 py-4">Date</th>
+                      <th scope="col" className="px-6 py-4">Order ID</th>
+                      <th scope="col" className="px-6 py-4">Amount</th>
+                      <th scope="col" className="px-6 py-4">No. of Items</th>
+                      <th scope="col" className="px-6 py-4">Status</th>
+                      <th scope="col" className="px-6 py-4">Other</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {!!allOrders && ordersPageData}
+                  </tbody>
+                </table>
               </div>
             </div>
-          )
-        })
+          </div>
+        </div>
         :
         <div className="flex justify-center items-center mt-24">
           <h1 className="header-colored-text header-colored-text-alt-2">No Items</h1>

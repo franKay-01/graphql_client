@@ -34,7 +34,7 @@ export const CartProvider = ({ children }) => {
   const calculateTotal = () => {
     let total = 0;
     cart.forEach((item) => {
-      total += item.price * item.quantity;
+      total += item.unit_price * item.quantity;
     });
     return total;
   };
@@ -49,15 +49,16 @@ export const CartProvider = ({ children }) => {
   };
 
   const increaseQuantity = (productId, quantity) => {
+    console.log("HERE " + productId + " Q " + quantity)
     const updatedCart = cart.map((product) =>
-      product.id === productId ? { ...product, quantity: quantity } : product
+      product.id === productId ? { ...product, quantity: quantity + 1 } : product
     );
     setCart(updatedCart);
   };
 
   const changePrice = (productId, quantity) => {
     const updatedCart = cart.map((product) =>
-      product.id === productId ? { ...product, price: product.unit_price * quantity } : product
+      product.id === productId ? { ...product, price: product.unit_price * quantity, quantity: quantity } : product
     );
     setCart(updatedCart);
   };
