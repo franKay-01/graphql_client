@@ -5,6 +5,7 @@ import { ShowToast } from "../components/showToast";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"
 import CustomDialog from "../components/customDialog";
+import Footer from "../components/footer";
 
 export default function Gallery(){
   const [allOrders, setAllOrders] = useState([])
@@ -106,43 +107,44 @@ export default function Gallery(){
     <div className="min-h-screen relative">
       <Navbar/>
       <main className="main-home-content mt-8">
-      <div className="grid mt-12">
-        <div className="flex flex-row space-x-8">
-          <h1 className="header-colored-text header-colored-text-alt-2">Orders</h1>
-          <h1 className="cart-number">count: #{allOrders.length}</h1>
+        <div className="grid mt-12">
+          <div className="flex flex-row space-x-8">
+            <h1 className="header-colored-text header-colored-text-alt-2">Orders</h1>
+            <h1 className="cart-number">count: #{allOrders.length}</h1>
+          </div>
         </div>
-      </div>
-      {allOrders.length > 0 ? 
-        <div className="flex flex-col">
-          <div className="overflow-x-auto">
-            <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-              <div className="overflow-hidden">
-                <table className="min-w-full text-left text-sm font-light">
-                  <thead className="border-b font-medium dark:border-neutral-500">
-                    <tr>
-                      <th scope="col" className="px-6 py-4">#</th>
-                      <th scope="col" className="px-6 py-4">Date</th>
-                      <th scope="col" className="px-6 py-4">Order ID</th>
-                      <th scope="col" className="px-6 py-4">Amount</th>
-                      <th scope="col" className="px-6 py-4">No. of Items</th>
-                      <th scope="col" className="px-6 py-4">Status</th>
-                      <th scope="col" className="px-6 py-4">Other</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {!!allOrders && ordersPageData}
-                  </tbody>
-                </table>
+        {allOrders.length > 0 ? 
+          <div className="flex flex-col">
+            <div className="overflow-x-auto">
+              <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+                <div className="overflow-hidden">
+                  <table className="min-w-full text-left text-sm font-light">
+                    <thead className="border-b font-medium dark:border-neutral-500">
+                      <tr>
+                        <th scope="col" className="px-6 py-4">#</th>
+                        <th scope="col" className="px-6 py-4">Date</th>
+                        <th scope="col" className="px-6 py-4">Order ID</th>
+                        <th scope="col" className="px-6 py-4">Amount</th>
+                        <th scope="col" className="px-6 py-4">No. of Items</th>
+                        <th scope="col" className="px-6 py-4">Status</th>
+                        <th scope="col" className="px-6 py-4">Other</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {!!allOrders && ordersPageData}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        :
-        <div className="flex justify-center items-center mt-24">
-          <h1 className="header-colored-text header-colored-text-alt-2">No Items</h1>
-        </div>
-      }
+          :
+          <div className="flex justify-center items-center mt-24">
+            <h1 className="header-colored-text header-colored-text-alt-2">No Items</h1>
+          </div>
+        }
       </main>
+      <Footer/>
     </div>
   )
 }

@@ -8,6 +8,7 @@ const CartPage = React.lazy(()=> import('./pages/cart'));
 const SuccessPage = React.lazy(()=> import('./pages/success'));
 const UsersPage = React.lazy(()=> import('./pages/users'));
 const OrderPage = React.lazy(()=> import('./pages/orders'));
+const AboutUsPage = React.lazy(()=> import('./pages/about'));
 
 const App = () => {
   const router = useNavigate()
@@ -34,6 +35,7 @@ const App = () => {
     <React.Suspense fallback={"..... loading"}>
       <Routes>
         <Route path='/' element={<HomePage/>}></Route>
+        <Route path='/about' element={<AboutUsPage/>}></Route>
         <Route path='/gallery' element={<GalleryPage/>}></Route>
         <Route path='/shop' element={<ShopPage/>}></Route>
         <Route path='/cart' element={<CartPage/>}></Route>

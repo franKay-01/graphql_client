@@ -30,6 +30,12 @@ svg {
   padding-top: 70px;
 }
 
+.main-home-content-alt{
+  padding-top: 10rem;
+  padding-left: 5rem;
+  padding-right: 5rem;
+}
+
 .main-content{
   padding-top: 85px;
 }
@@ -294,6 +300,44 @@ svg {
   color: white;
   font-weight: 800;
   font-family: 'Inter', sans-serif;
+}
+
+.about-img-position-1{
+  position: absolute;
+  width: 25rem;
+  right: 0;
+  bottom: -20%;
+}
+
+.about-img-position-2{
+  position: absolute;
+  width: 15rem;
+  right: 20%;
+  bottom: -20%;
+}
+
+.about-img{
+  width: 40rem;
+}
+
+.variety-text-alt-1-b{
+  font-size: 2rem !important;
+}
+
+.variety-text-alt-1-n{
+  color: #FCB040 !important;
+  font-size: 4rem !important;
+}
+
+.variety-text-alt-1{
+  text-align: left;
+  font-size: 98px;
+  color: #000;
+  font-weight: 800;
+  line-height: 1;
+  font-family: 'Newsreader', serif;
+
+  /* font-family: 'Inter', sans-serif; */
 }
 
 .quote-text{
