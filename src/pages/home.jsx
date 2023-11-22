@@ -26,7 +26,7 @@ export default function Home(){
   return (
     <div className="min-h-screen relative">
       <Navbar/>
-      <main className="main-home-content">
+      <main className="main-home-content-alt">
         <div className="flex flex-col dashboard-image-container image-container">
           <img src={LogoAlt}/>
           <h1 className="banner-text">We strive to bring the <span className="banner-text-italic">best taste</span>,<br></br>out of Africa</h1>
@@ -36,7 +36,7 @@ export default function Home(){
         </div>
         <div className="flex flex-col main-container mt-12 lg:mt-24 md:mt-24">
           <h1 className="header-colored-text width-30">Best quality right from the heart of Africa</h1>
-          <h1 className="essence-text mt-12 mb-12">Taste the very Essence of Africa</h1>
+          <h1 className="essence-text mt-4 mb-12 lg:mt-12 md:mt-12">Taste the very Essence of Africa</h1>
 
           <div className="container variety-bg flex flex-col">
             <h1 className="variety-text mb-32">Taste the variety</h1>
@@ -47,7 +47,7 @@ export default function Home(){
 
           <div className="container grid grid-cols-1 md:flex md:flex-row space-x-0 lg:space-x-9 md:space-x-5">
             <div className="main-container flex flex-col">
-              <img className="mt-12" src={QuoteImg}/>
+              <img className="mt-12 quote-image" src={QuoteImg}/>
               <h1 className="quote-text">
                 RevieLorem ipsum dolor sit consectetue
                 radipiscing elit, sed diam nonummy
@@ -56,7 +56,7 @@ export default function Home(){
               <h1 className="quote-text">- Satisfied Customer</h1>
             </div>
             <div className="main-container flex flex-col">
-              <img className="mt-12" src={QuoteImg}/>
+              <img className="mt-12 quote-image" src={QuoteImg}/>
               <h1 className="quote-text">
                 RevieLorem ipsum dolor sit consectetue
                 radipiscing elit, sed diam nonummy
@@ -65,7 +65,7 @@ export default function Home(){
               <h1 className="quote-text">- Satisfied Customer</h1>
             </div>
             <div className="main-container flex flex-col">
-              <img className="mt-12" src={QuoteImg}/>
+              <img className="mt-12 quote-image" src={QuoteImg}/>
               <h1 className="quote-text">
                 RevieLorem ipsum dolor sit consectetue
                 radipiscing elit, sed diam nonummy
@@ -182,10 +182,10 @@ export default function Home(){
             <hr className="default"/>
           </div>
           <div className="container">
-            <div class="flex justify-center">
+            <div class="flex justify-start lg:justify-center md:justify-center">
               <h1 className="header-colored-text header-colored-text-alt-1">Recipe of the Day</h1>
             </div>
-            <div className="flex flex-col lg:hidden md:hidden">
+            <div className="flex flex-col lg:hidden md:hidden mt-4">
               <div className="custom-width">
                 <h1 className="header-colored-text">Banana Fruitcake</h1>
                 <h1 className="recipe-sub-text">Taste the very Essence of Africa</h1>
@@ -224,11 +224,6 @@ export default function Home(){
                   Oh! Onions. Yams. Avocados. Lettuce. Arugula (to some, “rocket”). Persian cucumbers, in addition to aforementioned “normal” cucumbers. Artichokes. Zucchinis. Pumpkins. Squash (what some cultures call pumpkins). Sweet potatoes and potato-potatoes. Jackfruit. Monk fruit. Fruit of the Loom. Fruits of our labor (this website). Sorrel. Pineapple. Mango. Gooseberries. Blackberries. Tomatoes. Heirloom tomatoes. Beets. Chives. Corn. Endive. Escarole, which, we swear, we’re vendors of organic produce, but if you asked us to describe what escaroles are...
                 </p>
               </div>
-            </div>
-          </div>
-          <div className="main-container">
-            <div className="banner-button">
-              <h1 className="banner-button-text">Try other Recipes</h1>
             </div>
           </div>
         </div>

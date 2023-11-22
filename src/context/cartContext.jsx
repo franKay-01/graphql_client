@@ -49,7 +49,6 @@ export const CartProvider = ({ children }) => {
   };
 
   const increaseQuantity = (productId, quantity) => {
-    console.log("HERE " + productId + " Q " + quantity)
     const updatedCart = cart.map((product) =>
       product.id === productId ? { ...product, quantity: quantity + 1 } : product
     );
@@ -67,6 +66,14 @@ export const CartProvider = ({ children }) => {
     setCart(cart.filter((product) => product.id !== productId));
   };
 
+  const getProductPrice = (productId) => {
+    const productItem = cart.map((product) =>
+      product.id === productId ?  product.price  : null
+    );
+
+    return productItem
+  }
+
   const getCartItemCount = () => {
     return cart.length;
   };
@@ -79,7 +86,7 @@ export const CartProvider = ({ children }) => {
   });
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, changePrice, calculateTotal, removeFromCart, getCartItemCount, decreaseQuantity, increaseQuantity}}>
+    <CartContext.Provider value={{ cart, addToCart, changePrice, calculateTotal, removeFromCart, getCartItemCount, decreaseQuantity, increaseQuantity, getProductPrice}}>
       {children}
     </CartContext.Provider>
   );

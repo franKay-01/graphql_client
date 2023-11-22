@@ -2,6 +2,7 @@ import React, { useContext, Fragment } from 'react';
 import { Disclosure, Popover, Transition  } from '@headlessui/react'
 import { MenuIcon, XIcon, ChevronDownIcon } from '@heroicons/react/outline'
 import Logo from '../assets/logo.png'
+import QuoteImg from "../assets/quote.png"
 import {Link, NavLink} from 'react-router-dom'
 import SearchImg from '../assets/search.png'
 import ShopImg from '../assets/shop_logo.png'
@@ -13,9 +14,9 @@ const navigation = [
   { name: 'HOME', href: '/', current: false },
   { name: 'GALLERY', href: '/gallery', current: false },
   { name: 'SHOP', href: '/shop', current: false },
-  { name: 'ABOUT US', href: '/', current: false },
-  { name: 'CONTACT US', href: '/', current: false },
-  { name: 'WHOLESALE', href: '/shop', current: false },
+  { name: 'ABOUT US', href: '/about', current: false },
+  { name: 'CONTACT US', href: '/contact_us', current: false },
+  { name: 'WHOLESALE', href: '/bulk_shop', current: false },
 ]
 
 export default function Navbar() {
@@ -36,7 +37,7 @@ export default function Navbar() {
             <div className="relative flex flex-row items-center justify-between h-16">
               <div className="absolute inset-y-0 right-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
-                <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                <Disclosure.Button className="mb-button-outline inline-flex items-center justify-center p-2 rounded-md text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                   <span className="sr-only">Open main menu</span>
                   {open ? (
                   <XIcon className="block h-6 w-6" aria-hidden="true" />
@@ -55,20 +56,13 @@ export default function Navbar() {
                     <NavLink activeStyle={{ color:'#5754a8' }} className='block px-3 py-2 nav-text' exact to="/">HOME</NavLink>
                     <NavLink activeStyle={{ color:'#5754a8' }} className='block px-3 py-2 nav-text' exact to="/gallery">GALLERY</NavLink>
                     <NavLink activeStyle={{ color:'#5754a8' }} className='block px-3 py-2 nav-text' exact to="/shop">SHOP</NavLink>
-                    <NavLink activeStyle={{ color:'#5754a8' }} className='block px-3 py-2 nav-text' exact to="/">ABOUT US</NavLink>
-                    <NavLink activeStyle={{ color:'#5754a8' }} className='block px-3 py-2 nav-text' exact to="/">CONTACT US</NavLink>
-                    <NavLink activeStyle={{ color:'#5754a8' }} className='block px-3 py-2 nav-text' exact to="/">WHOLESALE</NavLink>
+                    <NavLink activeStyle={{ color:'#5754a8' }} className='block px-3 py-2 nav-text' exact to="/about">ABOUT US</NavLink>
+                    <NavLink activeStyle={{ color:'#5754a8' }} className='block px-3 py-2 nav-text' exact to="/contact_us">CONTACT US</NavLink>
+                    <NavLink activeStyle={{ color:'#5754a8' }} className='block px-3 py-2 nav-text' exact to="/bulk_shop">WHOLESALE</NavLink>
                   </div>                  
-                </div>
-                
+                </div>                
               </div>
-              <div className="hidden lg:block lg:w-auto mr-4">
-                <a href='/get-started' className="brown-button button-margin-left">
-                  <img src={SearchImg}/>
-                  
-                </a>
-              </div>
-              <div className="hidden lg:block lg:w-auto mr-4">
+              <div className="block lg:block lg:w-auto mr-16 lg:mr-4 md:mr-4">
                 <a href='/cart' className="brown-button button-margin-left relative">
                   <img src={ShopImg}/>
                   {cart.length > 0 ? <div className='cart-count'><p className='cart-count-text'>{cart.length}</p></div> : null}
@@ -130,6 +124,26 @@ export default function Navbar() {
                                       </span>
                                     </a>
                                   </div>
+                                  {siginedIn ? 
+                                    <div className="bg-gray-50 p-4">
+                                      <a
+                                        href="/orders"
+                                        className="flow-root rounded-md px-2 py-2 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
+                                      >
+                                        <span className="flex items-center">
+                                          <span className="text-sm font-medium flex flex-row space-x-2 text-gray-900">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
+                                            </svg>
+                                            <span className="block text-sm text-gray-500">
+                                              Log Out
+                                            </span>
+                                          </span>
+                                        </span>
+                                        
+                                      </a>
+                                    </div>
+                                    : null }
                                 </>
                                 :
                                 <div className="bg-gray-50 p-4">
@@ -180,6 +194,34 @@ export default function Navbar() {
                     {item.name}
                   </Disclosure.Button>
                 ))}
+                 <Popover className="relative px-3 py-2 rounded-md font-normal text-default-blue learn-display">
+                    <Popover.Button className="flex flex-row space-x-2 justify-center items-center link-text">
+                      <span>{siginedIn ? localStorage.getItem('username') : '---'}</span> 
+                      {/* <img src={QuoteImg}/> */}
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 5.25l-7.5 7.5-7.5-7.5m15 6l-7.5 7.5-7.5-7.5" />
+                      </svg>
+
+                    </Popover.Button>
+
+                    <Popover.Panel className="mt-4 ml-4">
+                      <div className="grid grid-cols-1 mobile-menu-bar">
+                        <Link to={'/about'} spy={true} smooth={true}
+                          className={"mb-4 link-text"}
+                          >
+                          ORDERS
+                        </Link>
+                        {siginedIn ? 
+                          <Link to={'/about'} spy={true} smooth={true}
+                            className="link-text"
+                            >
+                            LOG OUT
+                          </Link>
+                          :null}
+                        
+                      </div>
+                    </Popover.Panel>
+                  </Popover>
                 {/* <a href='/get-started' className="brown-button brown-button-alt link-text">
                   <span className='brown-button-text'>Get Started</span>
                 </a> */}

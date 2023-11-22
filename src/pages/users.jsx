@@ -60,6 +60,7 @@ export default function Users(){
       setIsLoading(false)
     }
   }
+
   const submitUserDetails = async () => {
     let {resp_code, resp_desc} = checkCredentials()
     if (!resp_code){
@@ -107,8 +108,14 @@ export default function Users(){
         <img src={LoginImg} className="absolute scribble-3-p" alt=""/>
         <div className='page-div flex flex-col space-y-12 p-8'>
           <div className='flex flex-row space-x-8'>
+            <div className='cursor-pointer' onClick={() => router(-1)}>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
+              </svg>
+            </div>
             <div className={`${loginSelect ? 'credential-header':'credential-header-alt'} cursor-pointer`} onClick={()=>setLoginSelect(true)}>Sign In</div>
             <div className={`${loginSelect ? 'credential-header-alt':'credential-header'} cursor-pointer`} onClick={()=>setLoginSelect(false)}>Sign Up</div>
+            
           </div>
           {
             loginSelect ?
@@ -129,6 +136,7 @@ export default function Users(){
                     <h1 className='credential-button-text'>Sign In</h1>
                   </button>
                 }
+                <a href="/forgotten_password" className='underline cursor-pointer forgotten-link'>Forgotten Password</a>
               </div>
             </>
             :

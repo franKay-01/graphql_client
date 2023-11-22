@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import {Route, Routes, useNavigate} from 'react-router-dom';
 
 const HomePage = React.lazy(()=> import('./pages/home'));
 const GalleryPage = React.lazy(()=> import('./pages/gallery'));
@@ -9,6 +9,9 @@ const SuccessPage = React.lazy(()=> import('./pages/success'));
 const UsersPage = React.lazy(()=> import('./pages/users'));
 const OrderPage = React.lazy(()=> import('./pages/orders'));
 const AboutUsPage = React.lazy(()=> import('./pages/about'));
+const ForgottenPasswordPage = React.lazy(()=> import('./pages/forgotten'))
+const BulkPage = React.lazy(()=> import('./pages/bulk'))
+const ContactPage = React.lazy(()=> import('./pages/contact'))
 
 const App = () => {
   const router = useNavigate()
@@ -42,6 +45,9 @@ const App = () => {
         <Route path='/success' element={<SuccessPage/>}></Route>
         <Route path='/orders' element={<OrderPage/>}></Route>
         <Route path='/credentials' element={<UsersPage/>}></Route>
+        <Route path='/contact_us' element={<ContactPage/>}></Route>
+        <Route path='/bulk_shop' element={<BulkPage/>}></Route>
+        <Route path='/forgotten_password' element={<ForgottenPasswordPage/>}></Route>
       </Routes>
     </React.Suspense>
   );
