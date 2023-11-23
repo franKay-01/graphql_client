@@ -9,7 +9,7 @@ import Footer from "../components/footer";
 export default function BulkPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [allProducts, setAllProducts] = useState([])
-  const { addToCart, removeFromCart } = useContext(CartContext);
+  const { addToCart, removeFromCart, calculateTotal } = useContext(CartContext);
 
   const { getProducts } = useFunctions();
 
@@ -50,6 +50,21 @@ export default function BulkPage() {
         </div>
         <div className="container main-container">
           <hr className="default-alt-2"></hr>
+        </div>
+        <div className="order-1 lg:order-2 md:order-2 summary-card p-4 flex flex-col space-y-4 mb-4">
+          <h1 className="item-card-label">Order Summary</h1>
+          <div className="flex justify-between">
+            <h1 className="summary-card-sub">Subtotal</h1>
+            <h1 className="summary-card-sub">$ {calculateTotal()}</h1>
+          </div>
+          <div className="flex justify-between">
+            <h1 className="summary-card-sub">Shipping</h1>
+            <h1 className="summary-card-sub">To be calculated</h1>
+          </div>
+          <div className="flex justify-between">
+            <h1 className="item-card-label">Total</h1>
+            <h1 className="item-card-label">$ {calculateTotal()}</h1>
+          </div>
         </div>
         { isLoading ? 
           <span className="spinner-position spinner-position-alt">

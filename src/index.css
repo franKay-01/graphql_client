@@ -47,6 +47,10 @@ svg {
   font-family: 'Inter', sans-serif;
 }
 
+.banner-text-alt{
+  font-size: 5rem !important;
+}
+
 .banner-text{
   padding-top: 120px;
   font-size: 40px;

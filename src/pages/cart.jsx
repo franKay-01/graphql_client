@@ -166,7 +166,6 @@ export default function Cart(){
             <div className="flex justify-between">
               <h1 className="summary-card-sub focus:outline-none mt-8">Zipcode</h1>
               <input className="zipcode-input-field mt-8" onChange={(e) => setZipcode(e.target.value)} type="text" name="zipcode"/>
-              
             </div>
             <span className="flex flex-row">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 red-label">

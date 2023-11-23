@@ -57,7 +57,7 @@ export default function Contact(){
       <Navbar/>
       <main className="main-home-content-alt mb-24">
         <div className="flex flex-col dashboard-image-container image-container dashboard-image-container-alt">
-          <h1 className="banner-text">Talk to us!!</h1>
+          <h1 className="banner-text banner-text-alt">Talk to us!!</h1>
         </div>
         <div className="flex flex-col main-container mt-12">
           <div className="container">
