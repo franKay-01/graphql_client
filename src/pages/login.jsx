@@ -10,28 +10,27 @@ import { ShowToast } from '../components/showToast';
 import useFunctions from '../utils/functions';
 import { useNavigate } from "react-router-dom"
 
-export default function Users(){
+export default function Login(){
   const [loginSelect, setLoginSelect] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
-
   const [country, setCountry] = useState(null)
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
-  const [email, setEmail] = useState('')
-  const [passcode, setPasscode] = useState('')
-  const [confirmPasscode, setConfirmPasscode] = useState('')
-  const [username, setUsername] = useState('')
-
-  const { signUp, signUserIn } = useFunctions();
 
   const router = useNavigate()
+
+  const { signUp, signUserIn } = useFunctions();
+  
+  const [form, setForm] = useState({firstName: '', lastName:'', username: '', email: '', passcode: '', confirmPasscode: '', username: ''})
+
+  const handleChange = (e) => {
+    setForm({...form,[e.target.name]: e.target.value})
+	}
 
   const changeUserChoice = (choice) => {
     setCountry(choice)
   }
 
   const checkCredentials = () => {
-    if (passcode === confirmPasscode){
+    if (form.passcode === form.confirmPasscode){
       return {"resp_code": true, "resp_desc": "Passwords match"}
     }else{
       return {"resp_code": false, "resp_desc": "Passwords do not match"}
@@ -39,27 +38,37 @@ export default function Users(){
   }
 
   const loginUser = async () => {
-
-    if (passcode === "" || username === ""){
+    if (form.passcode === "" || form.username === ""){
       ShowToast('error', "Please fill all required fields")
+      setIsLoading(false)
       return
     }
 
-    const params = {"password": passcode, "username": username}
+    const params = {"password": form.passcode, "username": form.username}
 
     setIsLoading(true)
-    const { response_code, token, client_username, msg } = await signUserIn(params);
-    if (response_code === 200){
+    const { response_status, token, client_username, msg } = await signUserIn(params);
+    if (response_status === true){
       setIsLoading(false)
       localStorage.setItem('username', client_username)
       localStorage.setItem('ttk', token);
 
-      router(-1)
+      window.location.href = '/'
     }else{
       ShowToast("error", msg)
       setIsLoading(false)
     }
   }
+
+  const areAnyValuesEmpty = () => {
+    return Object.entries(form).some(([key, value]) => value === '');
+  };
+
+  const isValidEmail = (email) => {
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    
+    return regex.test(email);
+  };
 
   const submitUserDetails = async () => {
     let {resp_code, resp_desc} = checkCredentials()
@@ -68,37 +77,47 @@ export default function Users(){
       return
     }
 
-    if (firstName === "" || lastName === "" || email === "" || passcode === "" || username === ""){
-      ShowToast('error', "Please fill all required fields")
+    if (areAnyValuesEmpty()){
+      ShowToast("error", "All fields are required")
+      return
+    }
+
+    if (!isValidEmail(form.email)){
+      ShowToast('error', "Email is not valid")
       return
     }
 
     setIsLoading(true)
 
-    const params = {"first_name": firstName, "last_name": lastName, "email": email, 
-    "country": country, "password": passcode, "username": username}
+    const params = {
+      "title": "Mr/Mrs",
+      "first_name": form.firstName, 
+      "last_name": form.lastName, 
+      "email": form.email, 
+      "country": country, 
+      "password": form.passcode, 
+      "username": form.username
+    }
 
     const { response_code, msg } = await signUp(params);
-    if (response_code === 200){
+    if (response_code === true){
       ShowToast("success", "Sign Up was successful")
 
-      setUsername('')
-      setFirstName('')
-      setLastName('')
-      setEmail('')
-      setPasscode('')
-      setConfirmPasscode('')
+      setForm({...form, firstName: '', lastName:'', username: '', email: '', passcode: '', confirmPasscode: '', username: ''})
       setCountry(null)
 
       setLoginSelect(true)
       setIsLoading(false)
+      return
     }else{
       ShowToast("error", msg)
       setIsLoading(false)
+      return
     }
+    setIsLoading(false)
   }
 
-  const countries = ['United States', 'Canada']
+  const countries = ['Ghana']
 
   return (
     <>
@@ -108,7 +127,7 @@ export default function Users(){
         <img src={LoginImg} className="absolute scribble-3-p" alt=""/>
         <div className='page-div flex flex-col space-y-12 p-8'>
           <div className='flex flex-row space-x-8'>
-            <div className='cursor-pointer' onClick={() => router(-1)}>
+            <div className='cursor-pointer' onClick={() => window.location.href = '/'}>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
               </svg>
@@ -121,8 +140,8 @@ export default function Users(){
             loginSelect ?
             <>
               <div className='flex flex-col space-y-4'>
-                <input className='credential-input-b focus:outline-none' onChange={(e) => setUsername(e.target.value)} placeholder='Username' type="text"/>
-                <input className='credential-input-b focus:outline-none' onChange={(e) => setPasscode(e.target.value)} placeholder='Passcode' type="password"/>
+                <input className='credential-input-b focus:outline-none' onChange={handleChange} name="username" placeholder='Username' type="text"/>
+                <input className='credential-input-b focus:outline-none' onChange={handleChange} name="passcode" placeholder='Passcode' type="password"/>
               </div>
               <div>
                 {isLoading ? 
@@ -142,12 +161,12 @@ export default function Users(){
             :
             <>
               <div className='flex flex-col space-y-4'>
-                <input onChange={(e)=>setUsername(e.target.value)} className='credential-input-b focus:outline-none' placeholder='Username' type="text"/>
-                <input onChange={(e)=>setFirstName(e.target.value)} className='credential-input-b focus:outline-none' placeholder='First Name' type="text"/>
-                <input onChange={(e)=>setLastName(e.target.value)} className='credential-input-b focus:outline-none' placeholder='Last Name' type="text"/>
-                <input onChange={(e)=>setEmail(e.target.value)} className='credential-input-b focus:outline-none' placeholder='Email Address' type="text"/>
-                <input onChange={(e)=>setPasscode(e.target.value)} className='credential-input-b focus:outline-none' placeholder='Passcode' type="password"/>
-                <input onChange={(e)=>setConfirmPasscode(e.target.value)} className='credential-input-b focus:outline-none' placeholder='Confirm Passcode' type="password"/>
+                <input onChange={handleChange} name="username" className='credential-input-b focus:outline-none' placeholder='Username' type="text"/>
+                <input onChange={handleChange} name="firstName" className='credential-input-b focus:outline-none' placeholder='First Name' type="text"/>
+                <input onChange={handleChange} name="lastName" className='credential-input-b focus:outline-none' placeholder='Last Name' type="text"/>
+                <input onChange={handleChange} name="email" className='credential-input-b focus:outline-none' placeholder='Email Address' type="text"/>
+                <input onChange={handleChange} name="passcode" className='credential-input-b focus:outline-none' placeholder='Passcode' type="password"/>
+                <input onChange={handleChange} name="confirmPasscode" className='credential-input-b focus:outline-none' placeholder='Confirm Passcode' type="password"/>
                 <Autocomplete
                   options={countries}
                   getOptionLabel={option => option}

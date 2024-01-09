@@ -2,46 +2,31 @@ import { useState } from 'react'
 import axios from "axios"
 
 const useAxios = () => {
-  const BASE_URL = process.env.API_URL || "http://localhost:5001";
-  const [error, setError] = useState(null)
-  const [isPending, setIsPending] = useState(false)
+  const BASE_URL = "http://localhost:4000/graphql";
 
   const token = localStorage.getItem("ttk")
-  /*
-  Execute Req
-  */
-  const executeGet = async (route) => {
+
+  const executeReq = async (operationName = '', query, variables = {}) => {
     try {
-      const res = await axios.get(`${BASE_URL}/${route}`, { headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      }})
+      const res = await axios.post(BASE_URL, {
+        operation: operationName,
+        query,
+        variables
+      }, 
+        { headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+          }
+        })
+
       return res
     }
     catch (err) {
-      return(err)
+      return {data: err, status: err.response.status}
     }
   }
 
-  const executeReq = async (route, body) => {
-    setIsPending(true)
-
-    try {
-      const res = await axios.post(`${BASE_URL}/${route}`, body, { headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      }})
-      return res
-    }
-    catch (err) {
-      setError(err)
-    }
-  }
-  /*
-  Execute Req
-  */
-
-  return { executeReq, executeGet }
+  return { executeReq }
 }
 
 export default useAxios

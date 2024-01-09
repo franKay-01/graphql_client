@@ -46,8 +46,6 @@ export default function Success(){
                 </p>
               </a>
             </div>
-        
-          
         </div>
       </div>
     </>

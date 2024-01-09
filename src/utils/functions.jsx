@@ -1,140 +1,225 @@
 import useAxios from "../hooks/hook";
 
 const useFunctions = () => {
-  const { executeReq, executeGet } = useAxios();
+  const { executeReq } = useAxios();
 
-  const sendUserToken = async (params) => {
-    const {data} = await executeReq('common/send-token', params)
-    return {response_code: data.response_code, response_message: data.response_message}
-  }
-
-  const checkToken = async (params) => {
-    const {data} = await executeReq('common/check-token', params)
-    return {response_code: data.response_code, response_message: data.response_message}
-  }
-
-  const submitContactDetails = async (params) => {
-    const {data} = await executeReq('common/contacts', params)
-    return {response_code: data.response_code, response_message: data.response_message}
-  }
-
-  const submitPasswordChange = async (params) => {
+  const signUp = async (user) => {
     try {
-      const {data} = await executeReq('users/change-user-password', params)
-      let response = {};
 
-      switch (data.response_code) {
-        case 200:
-          response = { response_code: 200, checkout_url: data.url, error: false, msg: "" };
-          break;
-        case 300:
-          response = { response_code: 300, error: true, msg: "Token expired. Please sign in to continue" };
-          break;
-        case 301:
-          response = { response_code: 301, error: true, msg: "Zipcode is incorrect. Please enter a valid zipcode" };
-          break;
-        default:
-          response = { response_code: 200, checkout_url: null, error: true, msg: "" };
-          break;
+      const params = `
+        mutation Mutation($client: AddUserInput!) {
+          addUser(client: $client) {
+            first_name
+          }
+        }
+      `
+
+      const variables = {client: user}
+      const { data } = await executeReq('signUp', params, variables)
+      
+      const { addUser } = data.data
+      if (Object.keys(addUser).length > 0) {
+        return {response_status: true, msg: "User Account created successfully"}
+      }else{
+        return {response_status: true, msg: "User Account creation failed"}
       }
-
-      return response
-
-    }catch (err){
-      return {response_code: 200, checkout_url: null, error: true, msg: ""}
+      
+    }catch{
+      return {response_status: false}
     }
   }
 
-  const submitCheckOut = async (params) => {
+  const submitCheckOut = async (orders) => {
     try {
-      const {data} = await executeReq('stripe/create-checkout-session', params)
-      let response = {};
+      const params = `
+        mutation Mutation($order: AddOrderInput!) {
+          addOrder(order: $order) {
+            id
+          }
+        }
+      `
 
-      switch (data.response_code) {
-        case 200:
-          response = {response_code: 200, checkout_url: data.url, error: false, msg: ""}
-          break
-        case 300:
-          response = {response_code: 300, error: true, msg: "Token expired. Please sign in to continue"}
-          break
-        case 301:
-          response = {response_code: 301, error: true, msg: "Zipcode is in-correct. Please enter valid zipcode"}
-          break
-        default:
-          response = {response_code: 200, checkout_url: null, error: true, msg: ""}
-          break
+      const variables = { order:  orders}
+
+      const { data } = await executeReq('checkOut', params, variables)
+  
+      const { addOrder } = data.data
+      if (Object.keys(addOrder).length > 0) {
+        return {response_status: true, msg: "Order created successfully"}
+      }else{
+        return {response_status: true, msg: "Order creation failed"}
       }
-      
-      return response
 
     }catch (err){
-      return {response_code: 200, checkout_url: null, error: true, msg: ""}
+      return {response_status: false}
+    }
+  }
+
+  const searchProduct = async (searchIndex) => {
+    try {
+      const params = `
+        query ProductSearch($searchIndex: String!){
+          product_search(search: $searchIndex) {
+            id
+            name
+            price
+            description
+            category {
+              id
+              name
+            }
+          }
+        }
+      `
+
+      const variables = {
+        searchIndex 
+      };
+  
+      const { data } = await executeReq('searchProduct', params, variables)
+      
+      const { product_search } = data.data
+
+      if (product_search.length > 0){
+        return {response_status: true, products: product_search}
+      }else{
+        return {response_status: false, products: null}
+      }
+
+    }catch(err){
+      console.log(err)
+      return {response_status: false}
+    }
+  }
+
+  const getCategorySpecificItems = async (categoryId) => {
+    try {
+      const params = `query CategorySearch($categoryId: ID!) {
+        category(id: $categoryId) {
+          id
+          name
+          products {
+            id
+            name
+            price
+            description
+          }
+        }
+      }`
+
+      const variables = {
+        categoryId 
+      };
+
+      const { data } = await executeReq('getCategoryItems', params, variables)
+      const { category } = data.data
+
+      if (category){
+        return {response_status: true, category}
+      }else{
+        return {response_status: false, category: null}
+      }
+    }catch(err){
+      return {response_status: false}
     }
   }
 
   const getProducts = async () => {
     try{
-      const { data } = await executeGet('product-info')
-      return {response_code: data.response_code, products: data.products}
-    }catch{
-      return {response_code: '001'}
-    }
-  }
+      const params = `query {
+        products {
+          id
+          name
+          price
+          description
+          category {
+            id
+            name
+          }
+        }
+      }`
 
-  const createEmailSubscription = async (params) => {
-    try{
-      const { data } = await executeReq('common/email-subscription', params)
-      return {response_code: data.response_code, msg: data.response_message}
-    }catch{
-      return {response_code: '001'}
-    }
-  }
+      const { data } = await executeReq('getProducts', params)
+      const { products } = data.data
 
-  const signUp = async (params) => {
-    try {
-      const {data} = await executeReq('users', params)
-      if (data.response_code === 200){
-        return {response_code: 200}
+      if (products.length > 0){
+        return {response_status: true, products}
       }else{
-        return {response_code: 201, msg: data.error.message}
+        return {response_status: false, products: null}
+      }
+      
+    }catch{
+      return {response_status: false}
+    }
+  }
+
+  const signUserIn = async (credentials) => {
+    try {
+      const params = `
+      query UserLogin($user: UserLoginInput!){
+        user_log_in(user: $user) {
+          username
+          token
+        }
+      }`
+
+      const variables = {user: credentials}
+      
+      const {data} = await executeReq('signIn', params, variables)
+      
+      const { user_log_in } = data.data
+
+      if (Object.keys(user_log_in).length > 0) {
+        return {response_status: true, token: user_log_in.token, client_username: user_log_in.username, msg: ''}
+      }else{
+        return {response_status: false, msg: null}
       }
     }catch{
-      return {response_code: 201, msg: "Sign Up process failed. Please try again in a few minutes"}
-    }
-  }
-
-  const signUserIn = async (params) => {
-    try {
-      const {data} = await executeReq('users/signin', params)
-      if (data.response_code === 200){
-        return {response_code: 200, token: data.token, client_username: data.username ,msg: null}
-      }else if (data.response_code === 300){
-        return {response_code: 300, msg: "Token expired. Please sign in to continue"}
-      }else{
-        return {response_code: 201, token: null, client_username: null ,msg: data.error.message}
-      }
-    }catch{
-      return {response_code: 201,  token: null, client_username: null, msg: "Sign In process failed. Please try again in a few minutes"}
+      return {response_status: false}
     }
   }
 
   const getOrders = async () => {
     try {
-      const {data} = await executeGet('order/customer')
-      if (data.response_code === 200){
-        return {response_code: 200, orders: data.orders}
-      }else if (data.response_code === 300){
-        return {response_code: 300, msg: "Token expired. Please sign in to continue"}
+      const params = `
+      query {
+        orders {
+          id
+          amount
+          quantity
+          createdAt
+          status
+          orderItems {
+            quantity
+            unit_amount
+            products {
+              name
+            }
+          }
+        }
+      }`
+
+      const { data, status } = await executeReq('getOrders', params)
+
+      if (status === 403 || status === 500){
+        localStorage.removeItem('ttk');
+        localStorage.removeItem('username');
+        return {response_status: false, msg: "Token has expired. Kindly log in again to access your orders"}  
+      }
+
+      const { orders } = data.data
+
+      if (orders.length > 0){
+        return {response_status: true, orders}
       }else{
-        return {response_code: 201, msg: data.error.message}
+        return {response_status: false}
       }
     }catch{
-      return {response_code: 201, msg: "Products could not be retrieved. Please try again in a few minutes"}
+      return {response_status: false}
     }
   }
 
-  return { submitCheckOut, getProducts, signUp, signUserIn, getOrders, createEmailSubscription, checkToken,
-  sendUserToken, submitPasswordChange, submitContactDetails }
+  return { submitCheckOut, getProducts, signUserIn, getCategorySpecificItems, searchProduct, signUp, getOrders}
 }
 
 export default useFunctions

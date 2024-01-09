@@ -2,7 +2,6 @@ import React, { useContext, Fragment } from 'react';
 import { Disclosure, Popover, Transition  } from '@headlessui/react'
 import { MenuIcon, XIcon, ChevronDownIcon } from '@heroicons/react/outline'
 import Logo from '../assets/logo.png'
-import QuoteImg from "../assets/quote.png"
 import {Link, NavLink} from 'react-router-dom'
 import SearchImg from '../assets/search.png'
 import ShopImg from '../assets/shop_logo.png'
@@ -11,24 +10,40 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 
 const navigation = [
-  { name: 'HOME', href: '/', current: false },
-  { name: 'GALLERY', href: '/gallery', current: false },
-  { name: 'SHOP', href: '/shop', current: false },
-  { name: 'ABOUT US', href: '/about', current: false },
-  { name: 'CONTACT US', href: '/contact_us', current: false },
-  { name: 'WHOLESALE', href: '/bulk_shop', current: false },
+  { name: 'SHOP', href: '/shop', current: false }
 ]
 
 export default function Navbar() {
   const { cart } = useContext(CartContext);
   const [siginedIn, setSignedIn] = useState(false)
 
-  useEffect(()=>{
+  const logout = () => {
+    localStorage.removeItem('ttk');
+    localStorage.removeItem('username');
+    
+    window.location.href = '/'   
+  }
+
+  useEffect(() => {
     const token = localStorage.getItem('ttk')
     if (token) {
       setSignedIn(true)
     }
-  }, [])
+
+    const handleStorageChange = (e) => {
+      if (e.key === 'cart' || e.key === 'ttk') {
+        setSignedIn(false)
+        return
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+
   return (
     <Disclosure as="nav" className="nav-bg-custom mobile-nav box-shad w-full left-0 top-0 nav-index">
       {({ open }) => (
@@ -53,12 +68,7 @@ export default function Navbar() {
               <div className="flex-1 flex items-center justify-center sm:items-stretch z-1 nav-items-margin">
                 <div className="hidden sm:block">
                   <div className="flex space-x-4">
-                    <NavLink activeStyle={{ color:'#5754a8' }} className='block px-3 py-2 nav-text' exact to="/">HOME</NavLink>
-                    <NavLink activeStyle={{ color:'#5754a8' }} className='block px-3 py-2 nav-text' exact to="/gallery">GALLERY</NavLink>
-                    <NavLink activeStyle={{ color:'#5754a8' }} className='block px-3 py-2 nav-text' exact to="/shop">SHOP</NavLink>
-                    <NavLink activeStyle={{ color:'#5754a8' }} className='block px-3 py-2 nav-text' exact to="/about">ABOUT US</NavLink>
-                    <NavLink activeStyle={{ color:'#5754a8' }} className='block px-3 py-2 nav-text' exact to="/contact_us">CONTACT US</NavLink>
-                    <NavLink activeStyle={{ color:'#5754a8' }} className='block px-3 py-2 nav-text' exact to="/bulk_shop">WHOLESALE</NavLink>
+                    <NavLink activeStyle={{ color:'#5754a8' }} className='block px-3 py-2 nav-text' exact to="/">SHOP</NavLink>
                   </div>                  
                 </div>                
               </div>
@@ -126,8 +136,8 @@ export default function Navbar() {
                                   </div>
                                   {siginedIn ? 
                                     <div className="bg-gray-50 p-4">
-                                      <a
-                                        href="/orders"
+                                      <button
+                                        onClick={logout}
                                         className="flow-root rounded-md px-2 py-2 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                                       >
                                         <span className="flex items-center">
@@ -141,14 +151,14 @@ export default function Navbar() {
                                           </span>
                                         </span>
                                         
-                                      </a>
+                                      </button>
                                     </div>
                                     : null }
                                 </>
                                 :
                                 <div className="bg-gray-50 p-4">
                                   <a
-                                    href="/credentials"
+                                    href="/login"
                                     className="flow-root rounded-md px-2 py-2 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                                   >
                                     <span className="flex items-center">
@@ -197,7 +207,6 @@ export default function Navbar() {
                  <Popover className="relative px-3 py-2 rounded-md font-normal text-default-blue learn-display">
                     <Popover.Button className="flex flex-row space-x-2 justify-center items-center link-text">
                       <span>{siginedIn ? localStorage.getItem('username') : '---'}</span> 
-                      {/* <img src={QuoteImg}/> */}
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 5.25l-7.5 7.5-7.5-7.5m15 6l-7.5 7.5-7.5-7.5" />
                       </svg>
@@ -206,13 +215,13 @@ export default function Navbar() {
 
                     <Popover.Panel className="mt-4 ml-4">
                       <div className="grid grid-cols-1 mobile-menu-bar">
-                        <Link to={'/about'} spy={true} smooth={true}
+                        <Link to={'/orders'} spy={true} smooth={true}
                           className={"mb-4 link-text"}
                           >
                           ORDERS
                         </Link>
                         {siginedIn ? 
-                          <Link to={'/about'} spy={true} smooth={true}
+                          <Link onClick={logout} spy={true} smooth={true}
                             className="link-text"
                             >
                             LOG OUT

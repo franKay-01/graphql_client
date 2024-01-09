@@ -1,14 +1,16 @@
 import React from 'react';
 import { Dialog } from '@headlessui/react';
 
-const CustomDialog = ({ isOpen, onClose, title, content }) => {
+const CustomDialog = ({ isOpen, onClose, contentData }) => {
+  const title = `Order ID: ${contentData.id}`;
+  let content = `Products: \n${contentData?.orderItems?.map(item => `# ${item.products.name} x${item.quantity}`).join('\n')}`;
+
   return (
     <Dialog open={isOpen} onClose={onClose}>
       <div className="fixed inset-0 z-10 overflow-y-auto">
         <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
           <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
 
-          {/* This is the dialog itself */}
           <div className="inline-block mt-44 align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:align-middle sm:max-w-lg sm:w-full">
             <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
               <div className="sm:flex sm:items-start">
@@ -17,8 +19,12 @@ const CustomDialog = ({ isOpen, onClose, title, content }) => {
                     {title}
                   </Dialog.Title>
                   <div className="mt-2">
-                    <p className="text-lg text-gray-500">{content}</p>
-                  </div>
+                    <span className="text-lg text-gray-500">
+                      {content.split('\n').map((item, index) => (
+                        <p key={index}>{item}</p>
+                      ))}
+                    </span>
+                  </div> 
                 </div>
               </div>
             </div>
