@@ -61,6 +61,12 @@ export default function Cart(){
     setNetwork('VOD')
   }
 
+  const handleQuantityChange = (e, productId) => {
+    const quantity = e.target.value
+    increaseQuantity(productId, quantity)
+    changePrice(productId, quantity)
+  }
+
   const handleOptionChange = (event, productId) => {
     const selectedValue = event.target.value;
     setSelectedOption(selectedValue);
@@ -151,8 +157,8 @@ export default function Cart(){
                     </div>
                     <h1 className="item-card-price item-card-price-alt">GHS {cart_item.unit_amount}</h1>
                     <div className="flex flex-row justify-between">
-
-                      <select id="quantity"
+                      <input type="number" value={cart_item.quantity} onChange={(e) => handleQuantityChange(e, cart_item.product_id)} className="border border-gray-300 text-gray-900 text-sm rounded-lg block p-4"/>
+                      {/* <select id="quantity"
                         onChange={(e) => handleOptionChange(e, cart_item.product_id)}
                         className="cart-b mt-4 border border-gray-300 text-gray-900 text-sm rounded-lg block w-32 p-2.5">                      
                         <option value="1" selected>1</option>
@@ -165,7 +171,7 @@ export default function Cart(){
                         <option value="8">8</option>
                         <option value="9">9</option>
                         <option value="10">10</option>
-                      </select>
+                      </select> */}
                                             
                       <div onClick={()=> removeFromCart(cart_item.product_id)} class="relative group cursor-pointer">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mt-4 red-label">

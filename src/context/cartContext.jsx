@@ -21,6 +21,12 @@ export const CartProvider = ({ children }) => {
   const addToCart = (product) => {
     const existingProduct = cart.find((p) => p.product_id === product.product_id);
     if (existingProduct) {
+      let initialAmount = 0;
+      cart.map((cart_product) =>
+        cart_product.product_id === product.product_id ? 
+        initialAmount = parseInt(cart_product.quantity) : 0
+      );
+      increaseQuantity(product.product_id, initialAmount)
       return 
     }
     setCart([...cart, product]);
